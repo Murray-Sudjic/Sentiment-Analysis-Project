@@ -1,0 +1,14 @@
+# Virtual environments
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Data (local only, not for GitHub)
+data/raw/
+data/work/
+
+# Editor settings
+.vscode/
