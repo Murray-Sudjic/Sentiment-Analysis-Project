@@ -9,15 +9,14 @@ sentiment_project/
 │  └─ scope_energy.yaml   # keywords, tickers, weights and basic info
 ├─ data/
 │  ├─ raw/                # raw JSONL Reddit pulls (from ingest)
-│  ├─ work/               # intermediate outputs
-│  └─ market/             # market prices/returns
+│  ├─ work/               # All intermediate outputs
 ├─ src/
 │  ├─ ingest.py           # pulls Reddit posts/comments
 │  ├─ clean.py            # filters + text construction
 │  ├─ features.py         # sentiment scoring + weighting + aggregation
 │  ├─ market.py           # fetches prices, computes forward returns
 │  ├─ evaluate.py         # joins features with returns, computes correlation
-│  └─ utils.py            # shared helpers (timestamps, etc.)
+│  └─ utils.py            # shared helpers
 │ 
 └─ run.py                 # orchestrates the full pipeline
 ```
@@ -68,7 +67,7 @@ Apply VADER sentiment, compute weights for each post/comment (features.py).
 Collapse to daily features (mean sentiment, weighted mean sentiment, counts).  
 **5.	Market Data**  
 Download adjusted close prices with Yahoo Finance (market.py), compute forward 1-day returns.  
-**6.	Evaluate**
+**6.	Evaluate**  
 Join sentiment features with returns, compute correlation (evaluate.py).  
 **7.	Run All**  
 Use run.py to execute all steps in one go.  
@@ -105,9 +104,9 @@ Written to `--workdir`:
 
 Console will also print:
 
-=== Evaluation ===
-             sent_mean_weighted ret_fwd_1d
-Correlation  Correlation: 0.123  P-value: 0.45
+=== Evaluation ===  
+sent_mean_weighted ret_fwd_1d  
+Correlation  Correlation: 0.123  P-value: 0.45  
 
 ## Notes
 	•	The pipeline includes both posts and comments; comment weights are scaled down relative to post size.
