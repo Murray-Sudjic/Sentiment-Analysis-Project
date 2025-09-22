@@ -9,7 +9,7 @@ sentiment_project/
 │  └─ scope_energy.yaml   # keywords, tickers, weights and basic info
 ├─ data/
 │  ├─ raw/                # raw JSONL Reddit pulls (from ingest)
-│  ├─ work/               # All intermediate outputs
+│  └─ work/               # All intermediate outputs
 ├─ src/
 │  ├─ ingest.py           # pulls Reddit posts/comments
 │  ├─ clean.py            # filters + text construction
