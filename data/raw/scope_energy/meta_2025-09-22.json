@@ -1,0 +1,18 @@
+{
+  "scope": "scope_energy",
+  "time_filter": "day",
+  "subreddits": [
+    "investing",
+    "stocks",
+    "energy"
+  ],
+  "keywords": [
+    "oil",
+    "natural gas",
+    "renewables",
+    "battery"
+  ],
+  "posts_count": 10,
+  "comments_count": 16,
+  "ingested_at_utc": 1758539890
+}

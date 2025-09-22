@@ -1,0 +1,40 @@
+name: scope_energy
+subreddits:
+  - investing
+  - stocks
+  - energy
+keywords:
+  - oil
+  - natural gas
+  - renewables
+  - battery
+tickers:
+  - XOM
+  - CVX
+  - BP
+  - SHEL
+  - COP
+name_map: # simple examples, can add more
+  exxon: XOM
+  exxonmobil: XOM
+  "exxon mobil": XOM
+  chevron: CVX
+  bp: BP
+  "bp plc": BP
+  shell: SHEL
+  "royal dutch shell": SHEL
+  conocophillips: COP
+  "conoco phillips": COP
+search_top_comments: true
+time_filter: day          # "hour" | "day" | "week" | "month" | "year" | "all"
+max_posts_per_query: 10
+top_comments: 3
+# Weighting
+decay:
+  lambda: 0.02   # per hour decay rate
+  cap: 10.0      # optional cap on weight
+subreddit_weights:
+  investing: 1.0
+  stocks: 0.9
+  wallstreetbets: 0.6
+  energymarkets: 1.1

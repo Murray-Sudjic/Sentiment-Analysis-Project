@@ -1,0 +1,8 @@
+pandas>=2.0
+numpy>=1.24
+yfinance>=0.2.30
+vaderSentiment>=3.3.2
+PyYAML>=6.0
+praw>=7.7
+scipy>=1.10
+langdetect>=1.0.9
