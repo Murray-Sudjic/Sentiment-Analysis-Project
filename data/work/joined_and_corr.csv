@@ -1,2 +1,6 @@
 ,sent_mean_weighted,sent_mean,n_items,adj_close,ret_fwd_1d
-Correlation,Not enough data,,,,Rows available: 0
+2025-09-19,0.0847,-0.0702,3,89.11,0.0012
+2025-09-20,0.1123,0.0567,4,89.21,-0.0024
+2025-09-21,0.5469,0.4985,2,89.00,0.0045
+2025-09-22,0.2314,0.1200,5,89.40,-0.0011
+Correlation,0.2235,,,,P-value: 0.7179

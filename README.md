@@ -3,10 +3,10 @@
 This project builds a pipeline to measure whether sentiment in Reddit posts and comments about energy/finance topics predicts ETF or stock returns.
 
 ## Project Structure
-
+```
 sentiment_project/
 ├─ config/
-│  └─ scope_energy.yaml   # keywords, tickers, weights, etc.
+│  └─ scope_energy.yaml   # keywords, tickers, weights and basic info
 ├─ data/
 │  ├─ raw/                # raw JSONL Reddit pulls (from ingest)
 │  ├─ work/               # intermediate outputs
@@ -17,13 +17,13 @@ sentiment_project/
 │  ├─ features.py         # sentiment scoring + weighting + aggregation
 │  ├─ market.py           # fetches prices, computes forward returns
 │  ├─ evaluate.py         # joins features with returns, computes correlation
-│  ├─ utils.py            # shared helpers (timestamps, etc.)
-│  └─ …
+│  └─ utils.py            # shared helpers (timestamps, etc.)
+│ 
 └─ run.py                 # orchestrates the full pipeline
+```
+### Config (`config/scope_energy.yaml`)
 
-## Config (`config/scope_energy.yaml`)
-
-Controls the scope of analysis:
+**Controls the scope of analysis:**
 
 - `name`: scope name (used in file paths)
 - `subreddits`: list of subreddits to pull from
@@ -36,7 +36,7 @@ Controls the scope of analysis:
 - `max_posts_per_query`: limit per query
 - `top_comments`: number of comments to attach per post
 
-Example:
+**Example:**
 
 ```yaml
 name: scope_energy
@@ -57,50 +57,51 @@ tickers:
   - COP
 ```
 ## Workflow
-	1.	Ingest
-Pull posts + top comments from Reddit with ingest.py. Saves JSONL under data/raw/.
-	2.	Clean
-Filter by dates, keywords, tickers; construct clean text fields (clean.py).
-	3.	Score
-Apply VADER sentiment, compute weights for each post/comment (features.py).
-	4.	Aggregate
-Collapse to daily features (mean sentiment, weighted mean sentiment, counts).
-	5.	Market Data
-Download adjusted close prices with Yahoo Finance (market.py), compute forward 1-day returns.
-	6.	Evaluate
-Join sentiment features with returns, compute correlation (evaluate.py).
-	7.	Run All
-Use run.py to execute all steps in one go.
+
+**1.	Ingest**  
+Pull posts + top comments from Reddit with ingest.py. Saves JSONL under data/raw/.  
+**2.	Clean**  
+Filter by dates, keywords, tickers; construct clean text fields (clean.py).  
+**3.	Score**  
+Apply VADER sentiment, compute weights for each post/comment (features.py).  
+**4.	Aggregate**  
+Collapse to daily features (mean sentiment, weighted mean sentiment, counts).  
+**5.	Market Data**  
+Download adjusted close prices with Yahoo Finance (market.py), compute forward 1-day returns.  
+**6.	Evaluate**
+Join sentiment features with returns, compute correlation (evaluate.py).  
+**7.	Run All**  
+Use run.py to execute all steps in one go.  
 
 ## Running the Pipeline
 
-First, activate your virtual environment and install requirements:
+**First, activate your virtual environment and install requirements:**
 
-pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 Run end-to-end:
-
+```
 python run.py \
   --raw_posts data/raw/scope_energy/posts_2025-01-01.jsonl \
   --ticker XLE \
   --start 2025-01-01 \
   --end 2025-01-31 \
   --workdir data/work
+```
+**Arguments**  
+- `--raw_posts` : Path to raw JSONL file from ingest.py  
+- `--ticker` : Market ticker to evaluate against (e.g., XLE, TSLA)  
+- `--start`, `--end` : Date range (YYYY-MM-DD)  
+- `--workdir` : Directory for outputs (default: data/work)  
 
-Arguments
-	•	--raw_posts : Path to raw JSONL file from ingest.py
-	•	--ticker : Market ticker to evaluate against (e.g., XLE, TSLA)
-	•	--start, --end : Date range (YYYY-MM-DD)
-	•	--workdir : Directory for outputs (default: data/work)
+**Outputs**
 
-Outputs
-
-Written to --workdir:
-	•	clean_posts.jsonl : filtered posts + comments
-	•	scored_posts.jsonl : sentiment + weights per item
-	•	features_daily.csv : daily aggregated sentiment features
-	•	returns_daily.csv : forward returns from market prices
-	•	joined_and_corr.csv : features + returns joined, with correlation row
+Written to `--workdir`:  
+- `clean_posts.jsonl` : filtered posts + comments  
+- `scored_posts.jsonl` : sentiment + weights per item  
+- `features_daily.csv` : daily aggregated sentiment features  
+- `returns_daily.csv` : forward returns from market prices  
+- `joined_and_corr.csv` : features + returns joined, with correlation row  
 
 Console will also print:
 

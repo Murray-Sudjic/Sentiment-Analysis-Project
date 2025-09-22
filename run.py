@@ -6,12 +6,12 @@ from src.clean import Cleaner
 from src.features import FeatureProcessor
 from src.market import fetch_prices, make_forward_returns
 from src.evaluate import evaluate
-from src.utils import to_epoch_seconds
+from src.utils import to_epoch_seconds, combine_jsonl
 import pandas as pd
 
 def main():
     ap = argparse.ArgumentParser(description="End-to-end runner: clean -> score -> aggregate -> returns -> evaluate")
-    ap.add_argument("--raw_posts", required=True, help="Path to raw posts JSONL (from ingest)")
+    ap.add_argument("--raw_posts", required=True, nargs="+", help="One or more raw JSONL files (posts/comments)")    
     ap.add_argument("--ticker", required=True, help="ETF/stock ticker for returns (e.g., XLE)")
     ap.add_argument("--start", required=True, help="Start date (YYYY-MM-DD) for cleaning/returns")
     ap.add_argument("--end", required=True, help="End date (YYYY-MM-DD) for cleaning/returns")
@@ -35,7 +35,10 @@ def main():
     cleaner = Cleaner(cfg)
     feats = FeatureProcessor(cfg)
 
-    records = cleaner.row_filtering(args.raw_posts, start_ts, end_ts)
+    combined_in = os.path.join(args.workdir, "raw_combined.jsonl")
+    combine_jsonl(args.raw_posts, combined_in)
+
+    records = cleaner.row_filtering(combined_in, start_ts, end_ts)
     cleaner.text_construction(records, clean_out)
 
     # Only call once
